@@ -1,15 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <AppHeader />
+    <Users />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Users from "@/components/UserList.vue";
+import AppHeader from "@/components/AppHeader.vue"; // Renamed import
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    AppHeader, // Updated to use the new name
+    Users
   }
 }
 </script>
