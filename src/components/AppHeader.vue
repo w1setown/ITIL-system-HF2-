@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'AppHeader',
+    name: 'HeaderApp',
     data() {
         return {
             links: [
