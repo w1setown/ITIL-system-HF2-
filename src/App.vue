@@ -1,21 +1,20 @@
 <template>
   <div>
     <AppHeader />
-    <Users />
-    <KnowLedgeBase />
+    <nav>
+      <router-link to="/">Knowledge Base</router-link>
+      <router-link to="/tickets">Ticket System</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Users from "@/components/UserList.vue";
-import AppHeader from "@/components/AppHeader.vue"; 
-import KnowLedgeBase from "@/components/KnowLedgeBase.vue";
+import AppHeader from "@/components/AppHeader.vue";
 
 export default {
   components: {
-    AppHeader,
-    Users,
-    KnowLedgeBase
+    AppHeader
   }
 }
 </script>
@@ -28,5 +27,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+nav {
+  margin-bottom: 20px;
+}
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #42b983;
+}
+nav a.router-link-exact-active {
+  font-weight: bold;
 }
 </style>

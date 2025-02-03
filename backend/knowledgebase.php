@@ -1,4 +1,5 @@
 <?php
+include 'cors.php';
 require_once 'db.php';
 
 try {

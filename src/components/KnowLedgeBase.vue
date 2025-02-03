@@ -21,7 +21,7 @@ export default {
         };
     },
     mounted() {
-        axios.get('http://localhost/vue_php_api/knowledgebase.php')
+        axios.get('http://localhost/ITIL-system-HF2-/backend/knowledgebase.php')
         .then(response => {
             this.title = response.data.title; 
             this.content = response.data.content;

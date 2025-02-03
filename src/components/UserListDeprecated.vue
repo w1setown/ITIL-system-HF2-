@@ -17,7 +17,7 @@
           };
       },
       mounted() {
-          axios.get('http://localhost/vue_php_api/users.php')
+          axios.get('http://localhost/it_servicedb/users.php')
           .then(response => {
               this.users = response.data;
           })
