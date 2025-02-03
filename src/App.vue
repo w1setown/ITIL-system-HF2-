@@ -2,17 +2,20 @@
   <div>
     <AppHeader />
     <Users />
+    <KnowLedgeBase />
   </div>
 </template>
 
 <script>
 import Users from "@/components/UserList.vue";
-import AppHeader from "@/components/AppHeader.vue"; // Renamed import
+import AppHeader from "@/components/AppHeader.vue"; 
+import KnowLedgeBase from "@/components/KnowLedgeBase.vue";
 
 export default {
   components: {
-    AppHeader, // Updated to use the new name
-    Users
+    AppHeader,
+    Users,
+    KnowLedgeBase
   }
 }
 </script>
