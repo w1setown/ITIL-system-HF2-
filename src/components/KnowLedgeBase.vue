@@ -37,9 +37,9 @@ export default {
 
 
 <style>
-::content {
+/*::content {
     
 }
 
-
+*/
 </style>
