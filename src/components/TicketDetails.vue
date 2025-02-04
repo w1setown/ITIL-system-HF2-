@@ -3,41 +3,16 @@
       <h2>Ticket Details</h2>
       <RoleSelector v-model="selectedRole" />
       <div v-if="ticket">
-        <div v-if="isEditableRole">
-          <div>
-            <label for="title">Title:</label>
-            <input type="text" v-model="ticket.title">
-          </div>
-          <div>
-            <label for="description">Description:</label>
-            <textarea v-model="ticket.description"></textarea>
-          </div>
-          <div>
-            <label for="tstatus">Status:</label>
-            <select v-model="ticket.tstatus">
-              <option value="new">New</option>
-              <option value="open">Open</option>
-              <option value="pending">Pending</option>
-              <option value="on-hold">On-Hold</option>
-              <option value="solved">Solved</option>
-            </select>
-          </div>
-          <div>
-            <label for="priority">Priority:</label>
-            <select v-model="ticket.priority">
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-          <button @click="saveTicket">Save Changes</button>
-        </div>
+        <ticket-form v-if="isEditableRole" :ticket="ticket" submit-button-text="Save Changes" @submit="saveTicket" />
         <div v-else>
           <h3>{{ ticket.title }}</h3>
           <p>{{ ticket.description }}</p>
           <p>Status: {{ ticket.tstatus }}</p>
           <p>Priority: {{ ticket.priority }}</p>
           <p>Last update: {{ ticket.created_at }}</p>
+        </div>
+        <div v-if="isEditableRole">
+          <button @click="confirmDelete">Delete Ticket</button>
         </div>
       </div>
       <div v-else>
@@ -49,16 +24,18 @@
   <script>
   import axios from 'axios';
   import RoleSelector from '@/components/RoleSelector.vue';
+  import TicketForm from '@/components/TicketForm.vue';
   
   export default {
     name: 'TicketDetails',
     components: {
-      RoleSelector
+      RoleSelector,
+      TicketForm
     },
     data() {
       return {
         ticket: null,
-        selectedRole: 'customer'
+        selectedRole: 'customer' // Default role
       };
     },
     computed: {
@@ -80,8 +57,8 @@
             console.error("Error fetching ticket:", error.response ? error.response.data : error.message);
           });
       },
-      saveTicket() {
-        axios.post(`http://localhost/ITIL-system-HF2-/backend/update_ticket.php`, this.ticket)
+      saveTicket(ticket) {
+        axios.post(`http://localhost/ITIL-system-HF2-/backend/update_ticket.php`, ticket)
           .then(response => {
             if (response.data.success) {
               alert('Ticket updated successfully');
@@ -91,6 +68,26 @@
           })
           .catch(error => {
             console.error("Error updating ticket:", error.response ? error.response.data : error.message);
+          });
+      },
+      confirmDelete() {
+        if (confirm('Are you sure you want to delete this ticket?')) {
+          this.deleteTicket();
+        }
+      },
+      deleteTicket() {
+        const ticketId = this.ticket.id;
+        axios.post(`http://localhost/ITIL-system-HF2-/backend/delete_ticket.php`, { id: ticketId })
+          .then(response => {
+            if (response.data.success) {
+              alert('Ticket deleted successfully');
+              this.$router.push({ name: 'TicketList' });
+            } else {
+              console.error("Error deleting ticket:", response.data.error);
+            }
+          })
+          .catch(error => {
+            console.error("Error deleting ticket:", error.response ? error.response.data : error.message);
           });
       }
     }

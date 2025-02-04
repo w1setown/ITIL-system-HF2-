@@ -2,37 +2,9 @@
     <div>
       <h2>TicketList</h2>
       <RoleSelector v-model="selectedRole" />
-      <form v-if="selectedRole !== 'customer'" @submit.prevent="createTicket">
-        <div>
-          <label for="title">Title:</label>
-          <input type="text" v-model="newTicket.title" required>
-        </div>
-        <div>
-          <label for="description">Description:</label>
-          <textarea v-model="newTicket.description" required></textarea>
-        </div>
-        <div>
-          <label for="tstatus">Status:</label>
-          <select v-model="newTicket.tstatus" required>
-            <option value="new">New</option>
-            <option value="open">Open</option>
-            <option value="pending">Pending</option>
-            <option value="on-hold">On-Hold</option>
-            <option value="solved">Solved</option>
-          </select>
-        </div>
-        <div>
-          <label for="priority">Priority:</label>
-          <select v-model="newTicket.priority" required>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-        <button type="submit">Create Ticket</button>
-      </form>
+      <ticket-form v-if="selectedRole !== 'customer'" :ticket="newTicket" submit-button-text="Create Ticket" @submit="createTicket" />
       <ul>
-        <li v-for="ticket in tickets" :key="ticket.id" @click="viewTicket(ticket.id)">
+        <li v-for="ticket in sortedTickets" :key="ticket.id" @click="viewTicket(ticket.id)">
           <h3>{{ ticket.title }}</h3>
           <p>Status: {{ ticket.tstatus }}</p>
           <p>Priority: {{ ticket.priority }}</p>
@@ -45,11 +17,13 @@
   <script>
   import axios from 'axios';
   import RoleSelector from '@/components/RoleSelector.vue';
+  import TicketForm from '@/components/TicketForm.vue';
   
   export default {
     name: 'TicketList',
     components: {
-      RoleSelector
+      RoleSelector,
+      TicketForm
     },
     data() {
       return {
@@ -62,6 +36,12 @@
         },
         selectedRole: 'customer'
       };
+    },
+    computed: {
+      sortedTickets() {
+        const priorityOrder = { high: 1, medium: 2, low: 3 };
+        return this.tickets.slice().sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+      }
     },
     mounted() {
       this.fetchTickets();
@@ -76,12 +56,12 @@
             console.error("Error fetching tickets:", error.response ? error.response.data : error.message);
           });
       },
-      createTicket() {
-        axios.post('http://localhost/ITIL-system-HF2-/backend/create_ticket.php', this.newTicket)
+      createTicket(ticket) {
+        axios.post('http://localhost/ITIL-system-HF2-/backend/create_ticket.php', ticket)
           .then(response => {
             if (response.data.success) {
               this.tickets.push({
-                ...this.newTicket,
+                ...ticket,
                 id: response.data.id,
                 created_at: new Date().toISOString()
               });
@@ -91,6 +71,7 @@
                 tstatus: 'new',
                 priority: 'low'
               };
+              this.tickets = this.sortedTickets;
             } else {
               console.error("Error creating ticket:", response.data.error);
             }
@@ -116,11 +97,5 @@
     border: 1px solid #ccc;
     padding: 10px;
     cursor: pointer;
-  }
-  form {
-    margin-bottom: 20px;
-  }
-  form div {
-    margin-bottom: 10px;
   }
   </style>
