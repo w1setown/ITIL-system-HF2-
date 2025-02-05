@@ -1,18 +1,20 @@
 <template>
   <div>
-    <AppHeader />
-    <Users />
+    <KnowLedgeBase />
+    <nav>
+      <router-link to="/">Knowledge Base</router-link>
+      <router-link to="/tickets">Ticket System</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Users from "@/components/UserList.vue";
-import AppHeader from "@/components/AppHeader.vue"; // Renamed import
+import KnowLedgeBase from "@/components/KnowLedgeBase.vue";
 
 export default {
   components: {
-    AppHeader, // Updated to use the new name
-    Users
+    KnowLedgeBase
   }
 }
 </script>

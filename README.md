@@ -5,7 +5,7 @@
 * Det skal minimum kunne:
   * Gemme og vise SLA for forskellige produkter/services
   * Have en knowledge database
-  * Virke som ticket system med prioritering(Level 1-3) og eskalering
+  * Virke som ticket system med prioritering og eskalering
   * Mulighed for at bruge struktureret problemløsningsmetoder og gemme dokumentation på de tilhørende tickets.
   * Der skal være brugt SLA på løsningen.
   * Det skal score højt i lighthouse.
