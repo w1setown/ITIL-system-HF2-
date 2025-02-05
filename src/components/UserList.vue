@@ -17,7 +17,7 @@
           };
       },
       mounted() {
-          axios.get('http://localhost/vue_php_api/users.php')
+          axios.get('http://localhost/ITIL-system-HF2-/backend/users.php')
           .then(response => {
               this.users = response.data;
           })

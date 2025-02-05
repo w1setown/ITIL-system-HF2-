@@ -18,6 +18,4 @@ if (isset($data['title'], $data['description'], $data['tstatus'], $data['priorit
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
     }
-} else {
-    echo json_encode(['error' => 'Invalid input']);
 }
