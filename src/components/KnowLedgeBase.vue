@@ -38,7 +38,7 @@
           }
       },
       mounted() {
-          axios.get('http://localhost/vue_php_api/knowledgebase.php')
+        axios.get('http://localhost/ITIL-system-HF2-/backend/knowledgebase.php')
           .then(response => {
               console.log(response.data); // check  data
               this.title = response.data.title || "FAQ";
