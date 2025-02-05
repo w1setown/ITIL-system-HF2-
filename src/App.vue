@@ -10,11 +10,10 @@
 </template>
 
 <script>
-import KnowLedgeBase from "@/components/KnowLedgeBase.vue";
 
 export default {
   components: {
-    KnowLedgeBase
+    
   }
 }
 </script>
