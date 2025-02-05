@@ -5,16 +5,24 @@
       <router-link to="/">Knowledge Base</router-link>
       <router-link to="/tickets">Ticket System</router-link>
     </nav>
-    <router-view />
+    <UserSelector v-model="selectedUser" />
+    <router-view :selected-user="selectedUser" />
   </div>
 </template>
 
 <script>
 import KnowLedgeBase from "@/components/KnowLedgeBase.vue";
+import UserSelector from "@/components/UserSelector.vue";
 
 export default {
   components: {
-    KnowLedgeBase
+    KnowLedgeBase,
+    UserSelector
+  },
+  data() {
+    return {
+      selectedUser: 'customer'
+    };
   }
 }
 </script>
