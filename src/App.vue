@@ -27,4 +27,29 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2c3e50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+
+nav a:hover {
+  transform: translateY(-2px);
+}
+
 </style>

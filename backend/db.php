@@ -1,18 +1,27 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+include("cors.php");
 
-$host = 'localhost';            // Your database host
-$dbname = 'it_servicedb';       // Name of the database
-$username = 'gabriel';          // Your database username
-$password = 'you_shall_pass';   // Your database password
+// db connection for both programmers
+$host = 'localhost';
+$dbname = 'it_servicedb';
+
+
+$username1 = 'gabriel';
+$password1 = 'you_shall_pass';
+
+
+$username2 = 'root';
+$password2 = '';
 
 try {
-    // Create a new PDO instance
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    // Set the PDO error mode to exception
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username1, $password1);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    // Return a JSON response with the error message
-    die(json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]));
+} catch (PDOException $e1) {
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username2, $password2);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e2) {
+        // error msg if fail
+        die(json_encode(['error' => 'Database connection failed: ' . $e2->getMessage()]));
+    }
 }

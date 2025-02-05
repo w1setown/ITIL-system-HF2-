@@ -14,6 +14,7 @@
         <div v-if="isEditableRole">
           <button @click="confirmDelete">Delete Ticket</button>
         </div>
+        <CommentList :ticket-id="ticket.id" :user-id="userId" />
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -25,15 +26,18 @@
   import axios from 'axios';
   import RoleSelector from '@/components/RoleSelector.vue';
   import TicketForm from '@/components/TicketForm.vue';
+  import CommentList from '@/components/CommentList.vue';
   
   export default {
     name: 'TicketDetails',
     components: {
       RoleSelector,
-      TicketForm
+      TicketForm,
+      CommentList
     },
     data() {
       return {
+        userId: 1, // Hardcoded user ID for now
         ticket: null,
         selectedRole: 'customer' // Default role
       };
@@ -45,6 +49,7 @@
     },
     mounted() {
       this.fetchTicket();
+      this.fetchUsers
     },
     methods: {
       fetchTicket() {
@@ -93,3 +98,4 @@
     }
   }
   </script>
+  

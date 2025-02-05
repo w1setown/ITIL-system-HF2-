@@ -14,9 +14,20 @@ function fetchTicketById($pdo, $id) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function fetchCommentsByTicketId($pdo, $ticketId) {
+    $stmt = $pdo->prepare("SELECT comment.id, comment.tcomment, comment.created_at, user.username FROM comment 
+                           JOIN user ON comment.user_id = user.id 
+                           WHERE comment.ticket_id = :ticket_id ORDER BY comment.created_at ASC");
+    $stmt->execute(['ticket_id' => $ticketId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 try {
     if (isset($_GET['id'])) {
         $ticket = fetchTicketById($pdo, $_GET['id']);
+        if ($ticket) {
+            $ticket['comments'] = fetchCommentsByTicketId($pdo, $_GET['id']);
+        }
         echo json_encode($ticket);
     } else {
         $tickets = fetchAllTickets($pdo);

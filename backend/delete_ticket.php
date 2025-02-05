@@ -12,6 +12,4 @@ if (isset($data['id'])) {
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
     }
-} else {
-    echo json_encode(['error' => 'Invalid input']);
 }
