@@ -19,16 +19,18 @@
       <button v-if="isEditableUser" @click="deleteTicket">Delete Ticket</button>
     </div>
     <div v-else>Ticket not found</div>
+    <CommentList :ticket-id="ticket.id" :user-id="userId" />
   </div>
 </template>
 
 <script>
 import { fetchTicket, updateTicket, deleteTicket } from '@/services/ticketService';
 import TicketForm from '@/components/TicketForm.vue';
+import CommentList from './CommentList.vue';
 
 export default {
   name: 'TicketDetails',
-  components: { TicketForm },
+  components: { TicketForm }, CommentList,
   props: {
     selectedUser: {
       type: String,
