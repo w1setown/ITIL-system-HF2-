@@ -17,6 +17,10 @@
         <p>Last update: {{ ticket.created_at }}</p>
       </div>
       <button v-if="isEditableUser" @click="deleteTicket">Delete Ticket</button>
+      <CommentList
+        v-if="ticket && ticket.id"
+        :ticket-id="Number(ticket.id)"
+        :user-id="1"/>
     </div>
     <div v-else>Ticket not found</div>
   </div>
@@ -25,11 +29,11 @@
 <script>
 import { fetchTicket, updateTicket, deleteTicket } from '@/services/ticketService';
 import TicketForm from '@/components/TicketForm.vue';
-import CommentList from './CommentList.vue';
+import CommentList from '@/components/CommentList.vue';
 
 export default {
   name: 'TicketDetails',
-  components: { TicketForm },
+  components: { TicketForm, CommentList },
   props: {
     selectedUser: {
       type: String,

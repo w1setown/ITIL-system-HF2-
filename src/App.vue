@@ -9,7 +9,7 @@
     <router-view :selected-user="selectedUser" />
   </div>
 </template>
-
+  
 <script>
 import KnowLedgeBase from "@/components/KnowLedgeBase.vue";
 import UserSelector from "@/components/UserSelector.vue";
